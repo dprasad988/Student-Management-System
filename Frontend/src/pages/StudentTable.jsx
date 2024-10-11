@@ -71,17 +71,17 @@ const StudentTable = () => {
   return (
     <div>
     <h1 className='text-center mb-4'>Students Table</h1>
-    <TableContainer component={Paper} className='container col-10'sx={{ border: '1px solid black' }}>
+    <TableContainer component={Paper} className='container col-10' sx={{ border: '1px solid black', boxShadow: 5 }}>
       <Table>
         <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Age</TableCell>
-            <TableCell>Contact</TableCell>
-            <TableCell>Guardian Name</TableCell>
-            <TableCell>Guardian Contact</TableCell>
-            <TableCell>Guardian Address</TableCell>
-            <TableCell>Action</TableCell>
+          <TableRow >
+            <TableCell sx={{color: 'red', fontSize: '18px', fontWeight: 'bold'}}>Name</TableCell>
+            <TableCell sx={{color: 'red', fontSize: '18px', fontWeight: 'bold'}}>Age</TableCell>
+            <TableCell sx={{color: 'red', fontSize: '18px', fontWeight: 'bold'}}>Contact</TableCell>
+            <TableCell sx={{color: 'red', fontSize: '18px', fontWeight: 'bold'}}>Guardian Name</TableCell>
+            <TableCell sx={{color: 'red', fontSize: '18px', fontWeight: 'bold'}}>Guardian Contact</TableCell>
+            <TableCell sx={{color: 'red', fontSize: '18px', fontWeight: 'bold'}}>Guardian Address</TableCell>
+            <TableCell sx={{color: 'red', fontSize: '18px', fontWeight: 'bold'}}>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
