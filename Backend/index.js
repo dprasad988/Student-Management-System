@@ -6,7 +6,7 @@ import studentRoutes from "./Routes/studentRoutes.js"
 
 dotenv.config();
 
-const port = 80;
+const port = 5005;
 const app = express();
 
 app.use(cors());
