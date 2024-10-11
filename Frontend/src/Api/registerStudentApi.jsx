@@ -22,3 +22,13 @@ export const getStudent = async () => {
     throw error;
   }
 }
+
+export const deleteStudent = async (id) =>{
+  try{
+    const responce = await axios.delete(`/student/${id}`);
+    return responce;
+  } catch (error) {
+    console.error('error deleting student', error);
+    throw error;
+  }
+}

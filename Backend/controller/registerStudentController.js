@@ -27,3 +27,17 @@ export const getAllStudents = async (req,  res)=> {
     return res.status(500).json({ error: 'Error getting students' });
   }
 }
+
+export const deleteStudent = async (req, res)=> {
+  const {id} = req.params;
+  console.log(id);
+  
+  const query = `DELETE FROM students WHERE student_id = ?`;
+  try{
+    await db.query(query, [id]);
+    return res.status(200).json({message: 'deleted successfully'});
+  } catch(error){
+    console.error("error deleting", error);
+    return res.status(500).json({message: 'error deleting student'});
+  }
+}
