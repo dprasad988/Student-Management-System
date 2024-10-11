@@ -2,6 +2,8 @@ import db from "../db.js"
 
 export const registerStudent = (req, res) => {
   const { name, age, contact, gurName, gurContact, gurAddress } = req.body;
+  console.log(req.body);
+  
 
   const query = `INSERT INTO students (name, age, contact, gur_name, gur_contact, gur_address)
                  VALUES (?, ?, ?, ?, ?, ?)`;
@@ -14,3 +16,15 @@ export const registerStudent = (req, res) => {
     res.status(201).json({ message: 'Student registered successfully', studentId: result.insertId });
   });
 };
+
+export const getAllStudents = async (req,  res)=> {
+  const query = `SELECT * FROM students`;
+  try {
+    const [results] = await db.query(query);
+    console.log(results);
+    return res.status(200).json(results);
+  } catch (error) {
+    console.error('Error getting students:', error);
+    return res.status(500).json({ error: 'Error getting students' });
+  }
+}

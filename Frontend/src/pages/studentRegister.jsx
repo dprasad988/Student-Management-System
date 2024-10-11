@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { registerStudent } from '../Api/registerStudentApi';
 
 function StudentRegister() {
   const [formData, setFormData] = useState({
@@ -18,23 +19,37 @@ function StudentRegister() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      const result = await registerStudent(formData);
+      console.log(result);
+      message.success("Student Registration Successfully!");
+      setFormData({
+        name: '',
+        age: '',
+        contact: '',
+        gurName: '',
+        gurContact: '',
+        gurAddress: ''
+      });
+    } catch (error) {
+      message.error("Student Registration faild!");
+    }
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-2">
       <div className="row justify-content-center">
-        <div className="col-md-6">
+        <div className="col-md-6 border border-3 p-4">
           <h2 className="text-center">Student Registration Form</h2>
           <h3 className="mt-4">Student Information</h3>
 
           <form onSubmit={handleSubmit} className="mt-3">
 
-            <div className="form-group mb-3 row">
-                <label htmlFor="name" className="col-sm-2">Name:</label>
-                <div className="col-sm-10">
+            <div className="form-group mb-3 row ">
+                <label htmlFor="name" className="col-sm-4">Name:</label>
+                <div className="col-sm-8">
                     <input
                     type="text"
                     className="form-control"
@@ -48,8 +63,8 @@ function StudentRegister() {
             </div>
 
             <div className="form-group mb-3 row">
-              <label htmlFor="age" className='col-sm-2'>Age:</label>
-              <div className='col-sm-10'>
+              <label htmlFor="age" className='col-sm-4'>Age:</label>
+              <div className='col-sm-8'>
                 <input
                     type="text"
                     className="form-control"
@@ -63,8 +78,8 @@ function StudentRegister() {
             </div>
 
             <div className="form-group mb-3 row">
-              <label htmlFor="contact" className='col-sm-2'>Contact:</label>
-              <div className='col-sm-10'>
+              <label htmlFor="contact" className='col-sm-4'>Contact:</label>
+              <div className='col-sm-8'>
                     <input
                         type="number"
                         className="form-control"
@@ -77,49 +92,55 @@ function StudentRegister() {
               </div>
             </div>
 
-            <h3 className="mt-4">Guardian Information</h3>
+            <h3 className="mt-4 mb-3">Guardian Information</h3>
 
-            <div className="form-group mb-3">
-              <label htmlFor="gurName">Guardian Name:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="gurName"
-                name="gurName"
-                value={formData.gurName}
-                onChange={handleChange}
-                required
-              />
+            <div className="form-group mb-3 row">
+              <label htmlFor="gurName" className='col-sm-4'>Guardian Name:</label>
+              <div className='col-sm-8'>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="gurName"
+                  name="gurName"
+                  value={formData.gurName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
 
-            <div className="form-group mb-3">
-              <label htmlFor="gurAddress">Guardian Address:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="gurAddress"
-                name="gurAddress"
-                value={formData.gurAddress}
-                onChange={handleChange}
-                required
-              />
+            <div className="form-group mb-3 row">
+              <label htmlFor="gurAddress" className='col-sm-4'>Guardian Address:</label>
+              <div className='col-sm-8'>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="gurAddress"
+                  name="gurAddress"
+                  value={formData.gurAddress}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
 
-            <div className="form-group mb-3">
-              <label htmlFor="gurContact">Guardian Contact:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="gurContact"
-                name="gurContact"
-                value={formData.gurContact}
-                onChange={handleChange}
-                required
-              />
+            <div className="form-group mb-3 row">
+              <label htmlFor="gurContact" className='col-sm-4'>Guardian Contact:</label>
+              <div className='col-sm-8'>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="gurContact"
+                  name="gurContact"
+                  value={formData.gurContact}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
 
             <div className="d-flex justify-content-end">
-              <button type="reset" className="btn btn-secondary">Clear</button>
+              <button type="reset" className="btn btn-secondary me-2">Clear</button>
               <button type="submit" className="btn btn-primary">Register</button>
             </div>
           </form>
