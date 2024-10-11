@@ -4,7 +4,6 @@ export const registerStudent = (req, res) => {
   const { name, age, contact, gurName, gurContact, gurAddress } = req.body;
   console.log(req.body);
   
-
   const query = `INSERT INTO students (name, age, contact, gur_name, gur_contact, gur_address)
                  VALUES (?, ?, ?, ?, ?, ?)`;
 
