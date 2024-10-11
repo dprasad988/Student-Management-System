@@ -15,30 +15,33 @@ import { deleteStudent, getStudent } from '../Api/registerStudentApi';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { message } from 'antd';
+import EditStudent from '../components/Student/editStudent';
 
 const StudentTable = () => {
 
   const [students, setStudents] = useState([]);
   const [selectedStudentId, setSelectedStudentId] = useState(null);
   const [open, setOpen] = useState(false)
+  const [openEditDialog, setOpenEditDialog] = useState(false)
+  const [selectedStudent, setSelectedStudent] = useState({})
 
+  const fetchStudents = async () => {
+    try {
+      const response = await getStudent();
+      setStudents(response || []);
+    } catch (error) {
+      console.error('Error fetching student data:', error);
+    }
+  };
+  
   useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const response = await getStudent();
-        console.log("response", response);
-        
-        setStudents(response || []);
-      } catch (error) {
-        console.error('Error fetching student data:', error);
-      }
-    };
-
     fetchStudents();
-  }, [setStudents]);
+  }, []);
+  
 
-  const handleEdit = (student_id) =>{
-
+  const handleEdit = (student) =>{
+    setSelectedStudent(student);
+    setOpenEditDialog(true);
   }
 
   const handleClickOpen = (studentId) =>{
@@ -47,6 +50,10 @@ const StudentTable = () => {
   }
   const handleClose = () =>{
     setOpen(false);
+  }
+  const handleEditClose = () =>{
+    setOpenEditDialog(false);
+    fetchStudents();
   }
 
   const handleDeleteConfirm = async () => {
@@ -88,7 +95,7 @@ const StudentTable = () => {
               <TableCell>{student.gur_contact}</TableCell>
               <TableCell>{student.gur_address}</TableCell>
               <TableCell>
-                <IconButton onClick= {() => handleEdit(student.student_id)}>
+                <IconButton onClick= {() => handleEdit(student)}>
                   <EditIcon sx={{color: 'blue'}}/>
                 </IconButton>
                 <IconButton onClick={() => handleClickOpen(student.student_id)}>
@@ -105,6 +112,12 @@ const StudentTable = () => {
         </TableBody>
       </Table>
     </TableContainer>
+
+    <EditStudent
+      open = {openEditDialog}
+      close = {handleEditClose}
+      studentData = {selectedStudent}
+    />
 
     {/* Confirmation Dialog */}
     <Dialog open={open} onClose={handleClose}>

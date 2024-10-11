@@ -41,3 +41,19 @@ export const deleteStudent = async (req, res)=> {
     return res.status(500).json({message: 'error deleting student'});
   }
 }
+
+export const updateStudent = async (req, res) => {
+  const { id } = req.params;
+  const { name, age, contact, gur_name, gur_contact, gur_address } = req.body;
+
+  const query = `UPDATE students SET name = ?, age = ?, contact = ?, gur_name = ?, gur_contact = ?, gur_address = ? WHERE student_id = ?`;
+
+  try {
+    await db.query(query, [name, age, contact, gur_name, gur_contact, gur_address, id]);
+    return res.status(200).json({ message: 'Updated successfully' });
+  } catch (error) {
+    console.error("Error updating student", error);
+    return res.status(500).json({ message: 'Error updating student' });
+  }
+};
+

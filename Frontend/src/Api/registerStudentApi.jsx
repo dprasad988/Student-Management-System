@@ -32,3 +32,15 @@ export const deleteStudent = async (id) =>{
     throw error;
   }
 }
+
+export const updateStudent = async (id, updatedData) =>{
+  console.log(id);
+  
+  try{
+    const responce = await axios.put(`/student/${id}`, updatedData);
+    return responce;
+  } catch (error) {
+    console.error('error deleting student', error);
+    throw error;
+  }
+}
