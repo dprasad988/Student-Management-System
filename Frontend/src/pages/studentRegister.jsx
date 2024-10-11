@@ -10,6 +10,7 @@ function StudentRegister() {
     gurContact: '',
     gurAddress: ''
   });
+  const [message, setMessage] = useState({ text: '', type: '' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,22 +20,26 @@ function StudentRegister() {
     });
   };
 
+  const handleReset = () => {
+    setFormData({
+      name: '',
+      age: '',
+      contact: '',
+      gurName: '',
+      gurContact: '',
+      gurAddress: ''
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const result = await registerStudent(formData);
       console.log(result);
-      message.success("Student Registration Successfully!");
-      setFormData({
-        name: '',
-        age: '',
-        contact: '',
-        gurName: '',
-        gurContact: '',
-        gurAddress: ''
-      });
+      setMessage({ text: "Student Registration Successfully!", type: "success" });
+      handleReset();
     } catch (error) {
-      message.error("Student Registration faild!");
+      setMessage({ text: "Student Registration Successfully!", type: "success" });
     }
   };
 
@@ -140,9 +145,14 @@ function StudentRegister() {
             </div>
 
             <div className="d-flex justify-content-end">
-              <button type="reset" className="btn btn-secondary me-2">Clear</button>
+              <button type="reset" className="btn btn-secondary me-2" onClick={handleReset}>Clear</button>
               <button type="submit" className="btn btn-primary">Register</button>
             </div>
+              {message.text && (
+              <div className={`alert alert-${message.type === "success" ? "success" : "danger"}`} role="alert">
+                {message.text}
+              </div>
+            )}
           </form>
         </div>
       </div>
