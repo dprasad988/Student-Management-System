@@ -34,7 +34,7 @@ const StudentTable = () => {
   return (
     <div>
     <h1 className='text-center mb-4'>Students Table</h1>
-    <TableContainer component={Paper} className='container col-10'>
+    <TableContainer component={Paper} className='container col-10'sx={{ border: '1px solid black' }}>
       <Table>
         <TableHead>
           <TableRow>

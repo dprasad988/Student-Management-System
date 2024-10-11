@@ -51,9 +51,7 @@ function StudentRegister() {
     } catch (error) {
       console.error("Registration Error:", error);
       setMessage({ text: "Failed to register student. Please try again.", type: "danger" });
-      setIsLoading(false);
     } finally {
-      console.log("Stopping spinner...");
       setIsLoading(false);
     }
   };
