@@ -12,7 +12,7 @@ export const registerStudent = (req, res) => {
       console.error('Error inserting student:', err);
       return res.status(500).json({ message: 'Error registering student' });
     }
-    res.status(201).json({ message: 'Student registered successfully', studentId: result.insertId });
+    res.status(201).json({ message: 'Student registered successfully', result });
   });
 };
 

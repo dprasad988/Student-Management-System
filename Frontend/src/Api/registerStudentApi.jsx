@@ -4,7 +4,6 @@ export const registerStudent = async (studentData) => {
   try {
     const response = await axios.post("/student", studentData);
     console.log(studentData);
-    
     return response.data;
   } catch (error) {
     console.error('Error registering student:', error);

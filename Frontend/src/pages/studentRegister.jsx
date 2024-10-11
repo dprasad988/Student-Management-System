@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { registerStudent } from '../Api/registerStudentApi';
+import { CircularProgress } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 function StudentRegister() {
   const [formData, setFormData] = useState({
@@ -11,6 +13,12 @@ function StudentRegister() {
     gurAddress: ''
   });
   const [message, setMessage] = useState({ text: '', type: '' });
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleViewClick = () => {
+    navigate('/student'); 
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,21 +41,36 @@ function StudentRegister() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const result = await registerStudent(formData);
       console.log(result);
       setMessage({ text: "Student Registration Successfully!", type: "success" });
       handleReset();
+      setIsLoading(false);
     } catch (error) {
-      setMessage({ text: "Student Registration Successfully!", type: "success" });
+      console.error("Registration Error:", error);
+      setMessage({ text: "Failed to register student. Please try again.", type: "danger" });
+      setIsLoading(false);
+    } finally {
+      console.log("Stopping spinner...");
+      setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="container mt-2">
       <div className="row justify-content-center">
         <div className="col-md-6 border border-3 p-4">
           <h2 className="text-center">Student Registration Form</h2>
+          <div>
+            {message.text && (
+              <div className={`alert alert-${message.type}`} role="alert">
+                {message.text}
+              </div>
+            )}
+          </div>
           <h3 className="mt-4">Student Information</h3>
 
           <form onSubmit={handleSubmit} className="mt-3">
@@ -133,7 +156,7 @@ function StudentRegister() {
               <label htmlFor="gurContact" className='col-sm-4'>Guardian Contact:</label>
               <div className='col-sm-8'>
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
                   id="gurContact"
                   name="gurContact"
@@ -146,13 +169,13 @@ function StudentRegister() {
 
             <div className="d-flex justify-content-end">
               <button type="reset" className="btn btn-secondary me-2" onClick={handleReset}>Clear</button>
-              <button type="submit" className="btn btn-primary">Register</button>
+              <button type="submit" className="btn btn-primary me-2" disabled={isLoading}> 
+                {isLoading ? <CircularProgress size={20} color="inherit" /> : "Register"}
+              </button>
+              <button className="btn btn-danger me-2" onClick={handleViewClick}>View</button>
             </div>
-              {message.text && (
-              <div className={`alert alert-${message.type === "success" ? "success" : "danger"}`} role="alert">
-                {message.text}
-              </div>
-            )}
+
+
           </form>
         </div>
       </div>
